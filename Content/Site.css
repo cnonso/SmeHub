@@ -1,0 +1,338 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/*.margin-top-20 {
+    margin-top: 20px;
+}*/
+
+
+.form-control-50 {
+  
+  width: 40%;
+  height: 24px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 0.828571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.btn-no-radius {
+ 
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 0.828571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+ 
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+}
+
+.btn-grey {
+  color: #ffffff;
+  background-color: #151515;
+  border-color: #151515;
+}
+
+.btn-orange {
+  color: #ffffff;
+  background-color: #f6571a;
+  border-color: #f6571a;
+}
+
+.btn-orange:hover,
+.btn-orange:focus,
+.btn-orange:active,
+.btn-orange.active,
+.open .dropdown-toggle.btn-info {
+  color: #ffffff;
+  background-color: #fc4904;
+  border-color: #fc4904;
+}
+
+.navbar-2 {
+  position: relative;
+  z-index: 1000;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+
+.navbar-white {
+  background-color: #ffffff;
+  border-color: #080808;
+}
+
+.navbar-grey {
+  background-color: #353535;
+  border-color: #080808;
+}
+
+.navbar-oxblood {
+  background-color: #a90707;
+  border-color: #080808;
+}
+
+.navbar-orange {
+  background-color: #f6571a;
+  border-color: #080808;
+}
+
+.navbar-blue {
+  background-color: #1d95a1;
+  border-color: #080808;
+}
+
+.navbar-red {
+  background-color: #ff0101;
+  border-color: #080808;
+}
+
+.navbar-fixed-below_navbar {
+  top: 50px;
+  z-index: 1030;
+  position: fixed;
+  right: 0;
+  left: 0;
+  border-width: 0 0 1px;
+}
+
+.navbar-fixed-below-black {
+  top: 20px;
+  z-index: 1030;
+  position: fixed;
+  right: 0;
+  left: 0;
+  border-width: 0 0 1px;
+}
+
+.navbar-container {
+  padding-right: 15px;
+  padding-left: 0;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.logintext {
+    color: #fff;
+    text-decoration:none;
+}
+
+.navbar-brand-white {
+  float: left;
+  padding: 15px 15px;
+  font-size: 15px;
+  line-height: 20px;
+  color:white;
+}
+
+.highlight-row{
+    background-color: #e5e5e5;
+}
+
+.highlight-total{
+    background-color: #656363;
+    color:white
+}
+
+.btn-default-blue {
+  background-color: #ffffff;
+  color: #5bc0de;
+  border-color: #46b8da;
+}
+
+.btn-ash {
+  background-color: #353535;
+  color: #ffffff;
+  border-color: #353535;
+}
+
+.btn-ash:hover,
+.btn-ash:focus,
+.btn-ash:active,
+.btn-ash.active,
+.open .dropdown-toggle.btn-info {
+  color: #ffffff;
+  background-color: #262626;
+  border-color: #262626;
+}
+
+#cf {
+    position:relative;
+    height:220px;
+    width:120px;
+    margin: 0 auto;
+}
+
+#cf img {
+  position:absolute;
+  left:0;
+  -webkit-transition: opacity 1s ease-in-out;
+     -moz-transition: opacity 1s ease-in-out;
+       -o-transition: opacity 1s ease-in-out;
+          transition: opacity 1s ease-in-out;
+}
+
+#cf img.top:hover{
+    opacity:0;
+}
+
+@keyframes cf3FadeInOut{
+    0%{
+        opacity:1;
+    }
+    45%{
+        opacity:1;
+    }
+    55%{
+        opacity:0;
+    }
+    100%{
+        opacity:0;
+    }
+}
+
+#cf img.top{
+    animation-name: cf3FadeInOut;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+    animation-duration:10s;
+    animation-direction:alternate;
+}
+
+
+/* Fade with multiple images
+    
+    For "n" images You must define:
+a=presentation time for one image
+b=duration for cross fading
+Total animation-duration is of course t=(a+b)*n
+
+animation-delay = t/n or = a+b
+
+Percentage for keyframes:
+
+  1  0%
+  2  a/t*100%
+  3  (a+b)/t*100% = 1/n*100%
+  4  100%-(b/t*100%)
+  5  100%*/
+
+@keyframes cf4FadeInOut {
+  0% {
+    opacity:1;
+  }
+  17% {
+    opacity:1;
+  }
+  25% {
+    opacity:0;
+  }
+  92% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+#cf4a img:nth-of-type(1) {
+  animation-delay: 6s;
+}
+#cf4a img:nth-of-type(2) {
+  animation-delay: 4s;
+}
+#cf4a img:nth-of-type(3) {
+  animation-delay: 2s;
+}
+#cf4a img:nth-of-type(4) {
+  animation-delay: 0;
+}
+
+div.transbox{
+    margin:30px;
+    background-color:#ffffff;
+    border:1px solid blue;
+    opacity:0.6;
+    filter: alpha (opacity=60)
+}
+
+.transbox{
+    margin:30px;
+    background-color:#ffffff;
+    border:1px solid blue;
+    opacity:0.6;
+    filter: alpha (opacity=60)
+}
+
+div.transbox p{
+    margin:5%;
+    font-weight:bold;
+    color:#000000
+}
+
+.close-gap {
+    margin-top: 250px;
+}
+@media (min-width: 768px) {
+  .close-gap {
+    margin-top: 100px;
+  }
+}

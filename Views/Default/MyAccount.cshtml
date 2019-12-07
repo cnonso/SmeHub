@@ -1,0 +1,290 @@
+﻿@model SME_Hub.Models.MultiModels
+
+@{
+    ViewBag.Title = "Account Profile";
+    ViewBag.Page = "Account Profile";
+}
+
+<script>
+    //Client-side image upload preview
+    var loadFile = function (event) {
+        var output = document.getElementById('output1');
+        output.src = URL.createObjectURL(event.target.files[0]);
+
+        var instruct = document.getElementById('instruct');
+        instruct.style.display = 'none';
+    };
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwB-f5_VLo2BIqevJ3X9hc-firQefTZrc&callback=initMap"
+        type="text/javascript"></script>
+@if(Html.DisplayFor(model => model.MyAccount.CoordinateLat).ToString() != "0")
+{ 
+<script>
+    var map;
+    var myCenter = new google.maps.LatLng( @Html.DisplayFor(model => model.MyAccount.CoordinateLat), @Html.DisplayFor(model => model.MyAccount.CoordinateLong));//Abuja= 8.971897294083027, 7.470703125; London = 51.508742, -0.120850
+
+    function initialize() {
+        var mapProp = {
+            center: myCenter,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            placeMarker(event.latLng);
+        });
+    }
+
+    function placeMarker(location) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+        });
+        infowindow.open(map, marker);
+        document.profileUpdate.CoordinateLat.value = location.lat();
+        document.profileUpdate.CoordinateLong.value = location.lng()
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+}
+else
+{
+    <script>
+    var map;
+    var myCenter = new google.maps.LatLng(8.971897294083027, 7.470703125);//Abuja= 8.971897294083027, 7.470703125; London = 51.508742, -0.120850
+
+    function initialize() {
+        var mapProp = {
+            center: myCenter,
+            zoom: 6,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            placeMarker(event.latLng);
+        });
+    }
+
+    function placeMarker(location) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+        });
+        infowindow.open(map, marker);
+        document.profileUpdate.CoordinateLat.value = location.lat();
+        document.profileUpdate.CoordinateLong.value = location.lng()
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+}
+
+<link href="~/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="~/css/zoomslider.css" />
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />
+<link rel="stylesheet" type="text/css" href="~/css/component.css" />
+<script type="text/javascript" src="~/js/modernizr-2.6.2.min.js"></script>
+<!--/web-fonts-->
+<link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,600italic,300,300italic,700,400italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Wallpoet' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Ubuntu:400,500,700,300' rel='stylesheet' type='text/css'>
+<!--//web-fonts-->
+<script type="application/x-javascript">
+    addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+           function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<div class="container">
+    @*<button class="btn" style="background: #e16b5b" value="Button">Button</button>*@
+    <div class="col-md-8 single-left">
+        <div class="sample1">
+            <div class="carousel" style="height: 341px;">
+                <ul>
+                    <li class=""> <img width="1350" class="img-responsive" src="@Html.DisplayFor(model => model.MyAccount.LogoUrl)" alt="@Html.DisplayFor(model => model.MyAccount.CompanyName)"> <div class="caption1	"><span></span></div></li>
+                </ul>
+            </div>
+        </div>
+        <div class="single-left2">
+            <h3>@Html.DisplayFor(model => model.MyAccount.CompanyName)</h3>
+            <ul class="com">
+                <li>
+                    @Html.Partial("_VoteShow")
+                </li>
+            </ul>
+            <div class="single-left2-sub">
+                <ul>
+                    <li>Description: </li>
+                </ul>
+            </div>
+        </div>
+        <div class="single-left3">
+            <p>
+                @Html.DisplayFor(model => model.MyAccount.Description)
+            </p>
+        </div>
+        <div class="single-left2-sub">
+            <ul>
+                <li>Location: </li>
+            </ul>
+        </div>
+        <div id="googleMap" style="height:350px; border:thin; padding-left:20px"></div>
+        <div class="comments agile-info">
+            <h4>Comments</h4>
+            @foreach (var item in Model.CommentsForService)
+            {
+                <div class="comments-grid" style="margin-top:20px">
+                    <div class="comments-grid-left">
+                        <img src="~/images/icon.png" alt=" " class="img-responsive">
+                    </div>
+                    <div class="comments-grid-right">
+                        <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                        @*<h3><a href="#">Adam Smith</a></h3>*@
+                        <h5><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> On @String.Format("{0:dddd, MMMM d, yyyy}", item.Date.Value)</h5>
+                        <p>@Html.DisplayFor(modelItem => item.Content)</p>
+
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+    <div class="col-md-4 single-right">
+        <div class="blo-top">
+            <div class="tech-btm">
+                <h4>Update Your Profile Below</h4>
+
+                @if (Session["Message"] != null)
+                {
+                    <span style="color:red">
+                        @Session["Message"].ToString()
+                    </span>
+                }
+
+                <p>With more and accurate information about your business, you stand a high chance of meeting with clients. Update your profile today</p>
+                <div class="name">
+                    <form name="profileUpdate" action="UpdateProfile" method="post" enctype="multipart/form-data">
+                        @*@using (Html.BeginForm("MyAccount", "Default", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                            {*@
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.MyAccount.Id)
+
+                        <label>Company Name:</label>
+                        <input name="CompanyName" type="text" class="email" value="@Html.DisplayFor(model => model.MyAccount.CompanyName)" />
+                                               
+
+                        <label style="margin-top:20px">Website:</label>
+                        <input name="Website" type="text" class="email" value="@Html.DisplayFor(model => model.MyAccount.Website)" />
+                        
+
+                        <label style="margin-top:20px">Phone Number:</label>
+                        <input name="PhoneNo" type="text" class="email" value="@Html.DisplayFor(model => model.MyAccount.PhoneNo)" />
+                        
+
+                        <label style="margin-top:20px">Category:</label><br />
+                        <select name="Category" class="form-data form-control" style="width:100%; border-radius:0px; border-color:#333333">
+                            <option value="@Html.DisplayFor(model => model.MyAccount.Category)">@Html.DisplayFor(model => model.MyAccount.Category)</option>
+                            <option value="Small Scale">Small Scale</option>
+                            <option value="Medium Scale">Medium Scale</option>
+                            <option value="Large Scale">Large Scale</option>
+                        </select>
+
+                        <label style="margin-top:20px"> Business Description:</label>
+                        <textarea name="Description" class="email" style="border-radius:0px; width:100%; border-color:#333333" rows="5" placeholder="Your Comment...">@Html.DisplayFor(model => model.MyAccount.Description)</textarea>
+                        
+
+                        <label style="margin-top:20px">Address:</label>
+                        <textarea name="Address" class="email" style="border-radius:0px; width:100%; border-color:#333333" rows="5" placeholder="Your Comment...">@Html.DisplayFor(model => model.MyAccount.Address)</textarea>
+
+                        <label style="margin-top:20px">Company Profile Image:</label>
+                        <label class="custom-file-upload">
+
+                            <small id="instruct">Select an image in this area <span class="glyphicon glyphicon-camera"></span></small>
+                            <img class="img-responsive center-block" id="output1" height="250" />
+                            @*@Html.TextBoxFor(m => m.MyAccountViewModel.LogoImage, new { @type = "file", accept = "image/*", onchange = "loadFile(event)" })*@
+                            <input name="LogoImage" type="file" accept="image/*" onchange="loadFile(event)" />
+                        </label>
+
+                        <style>
+                            input[type="file"] {
+                                display: none;
+                            }
+
+                            .custom-file-upload {
+                                border: 1px solid #ccc;
+                                display: inline-block;
+                                padding: 6px 12px;
+                                cursor: pointer;
+                                width: 100%;
+                                height: 250px;
+                            }
+                        </style>
+
+
+                        <label style="margin-top:20px">Location: <small style="color: #f75b1f">Select from the map</small></label>
+                        @*@Html.TextBoxFor(model => model.MyAccount.CoordinateLong, new { @class = "email", @readonly = true })
+                            @Html.TextBoxFor(model => model.MyAccount.CoordinateLat, new { @class = "email", @style = "margin-top:20px", @readonly = true })*@
+                        <input type="text" id="coordinate" name="CoordinateLat" placeholder="Latitude..." readonly>
+                        <input style="margin-top:20px" type="text" id="coordinate" name="CoordinateLong" placeholder="Longitude..." readonly>
+
+
+                        <label style="margin-top:20px">Business Summary: <small style="color:#f75b1f"> <span class="glyphicon glyphicon-tag"></span>Tag</small></label>
+                        @Html.DropDownList("KeyWord", null, new { @id = "country19", @class = "frm-field required", @style = "border-color:#1799ac" })
+                        @Html.ValidationMessageFor(model => model.MyAccount.DescriptionSummary)
+
+
+
+                        <input style="margin-top:70px" type="submit" value="Update Profile">
+                        @*}*@
+                    </form>
+
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="related-posts">
+                <h3>Related Businesses</h3>
+                @foreach (var item in Model.RelatedArtisans)
+                {
+                    <div class="related-post">
+                        <div class="related-post-left">
+                            <a href="@Url.Action("Details", "Default", new { id = item.Id })"><img src="@Html.DisplayFor(modelItem => item.LogoUrl)" alt=" " class="img-responsive"></a>
+                        </div>
+                        <div class="related-post-right">
+                            <h4><a href="@Url.Action("Details", "Default", new { id = item.Id })">@Html.DisplayFor(modelItem => item.CompanyName)</a></h4>
+                            <p>
+                                @Html.DisplayFor(modelItem => item.Description).ToString().Substring(0, Math.Min(item.Description.Length, 50))...
+                            </p>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                }
+            </div>*@
+
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+<script src="~/js/jquery-1.11.1.min.js"></script>
+<script src="~/js/jquery.light-carousel.js"></script>
+<script>
+    $('.sample1').lightCarousel();
+</script>
+<link href="~/css/light-carousel.css" rel="stylesheet" type="text/css">
+<script src="~/js/bootstrap.js"></script>
+

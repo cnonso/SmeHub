@@ -1,0 +1,167 @@
+﻿@model SME_Hub.Models.ProfileAndMessages
+
+@{
+    ViewBag.Title = "Account Profile";
+}
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<!-- google map api -->
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+    var map;
+    var myCenter = new google.maps.LatLng(8.971897294083027, 7.470703125);//Abuja= 8.971897294083027, 7.470703125; London = 51.508742, -0.120850
+
+    function initialize() {
+        var mapProp = {
+            center: myCenter,
+            zoom: 6,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            placeMarker(event.latLng);
+        });
+    }
+
+    function placeMarker(location) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+        });
+        infowindow.open(map, marker);
+        document.gpsForm.CoordinateLat.value = location.lat();
+        document.gpsForm.CoordinateLong.value = location.lng()
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Company Profile</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- Product Image & Available Colors -->
+            <div class="col-sm-6">
+                <div class="product-image-large">
+                    <img src="@Html.DisplayFor(model => model.MyAccount.LogoUrl)" height="450" />
+
+                </div>
+            </div>
+            <!-- End Product Image & Available Colors -->
+
+            <div class="col-sm-6">
+                <div class="tabbable">
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs product-details-nav">
+                        <li class="active"><a href="#tab1" data-toggle="tab">Details</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Location</a></li>
+                        <li><a href="#tab3" data-toggle="tab">Messages</a></li>
+                    </ul>
+                    <!-- Tab Content (Full Description) -->
+                    <div class="tab-content product-detail-info">
+                        <div class="tab-pane active" id="tab1" style="height:360px;">
+                            <h4>@Html.DisplayFor(model => model.MyAccount.CompanyName)</h4>
+                            @*<div class="price">
+                                    <span class="price-was">$959.99</span> $999.99
+                                </div>*@
+                            <h5>Listed under: <small>@Html.DisplayFor(model => model.MyAccount.Category) businesses</small></h5>
+                            <h4>
+                                @Html.DisplayFor(model => model.MyAccount.Description)
+                            </h4>
+                            <table class="shop-item-selections">
+                                <!-- Color Selector -->
+                                <tr>
+                                    <td><b>Website:</b></td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.MyAccount.Website)
+                                    </td>
+                                </tr>
+                                <!-- Size Selector -->
+                                <tr>
+                                    <td><b>Phone Number:</b></td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.MyAccount.PhoneNo)
+                                    </td>
+                                </tr>
+                                <!-- Quantity -->
+                                <tr>
+                                    <td><b>Address:</b></td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.MyAccount.Address)
+                                    </td>
+                                </tr>
+                                <!-- Add to Cart Button -->
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <a href="@Url.Action("EditAccount", "Default")" class="btn">Edit Profile</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                            <div style="background-color:white" class=" box-header with-border">
+                                <div id="googleMap" style="height:340px; border:thin; padding-left:20px"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab3">
+                            <div class="contact-form-wrapper" style="height:350px;">
+                                <table class="table table-striped">
+                                @if (Model.Messages.Count() > 0)
+                                {
+                                    foreach (var item in Model.Messages)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <p>From <i>@Html.DisplayFor(modelItem => item.Name)</i>
+                                                <p>@Html.DisplayFor(modelItem => item.Topic)<br />
+                                                <p>@Html.DisplayFor(modelItem => item.Content)
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>
+                                            <p>
+                                                You have no Mmssages.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Summary & Options -->
+        </div>
+
+        <!-- End Full Description & Specification -->
+    </div>
+</div>
+</div>
+
+@*<div class="col-md-2">
+        <img src="~/Images/banner3.jpg" />
+        <img src="~/Images/banner6.jpg" width="225" />
+
+    </div>*@

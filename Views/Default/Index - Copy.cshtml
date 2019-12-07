@@ -1,0 +1,107 @@
+﻿@model IEnumerable<SME_Hub.Models.MyAccount>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row" style="background-color: #e3e5e3">
+    <div>
+        @using (Html.BeginForm("ComplexSearch", "Default"))
+        { @Html.AntiForgeryToken()  @Html.ValidationSummary(true)
+            <div class="col-md-4" style="padding-top:20px">
+
+                <div class='input-group' id='departure'>
+                    <span class="input-group-addon" style="border-color:#1799ac">
+                        <span class="glyphicon glyphicon-search" style="color: #1799ac"></span>
+                    </span>
+                    @*@Html.DropDownList("KeyWord", null, new { @class = "form-control", @style = "border-color:#1799ac" })*@
+                    @*@Html.TextBoxFor(model => model.SimpleSearch.KeyWord, new { @class = "form-control", @placeholder = "Key words, e.g Surveyor, Graphics Designer..", style = "border-color:#1799ac" })*@
+                    <input name="keyWord" class="form-control" type="text" style="border-color:#1799ac" placeholder="Key words, e.g Surveyor, Graphics Designer.." required />
+                </div>
+            </div>
+
+            <div class="col-md-4" style="padding-top:20px">
+                <div class='input-group' id=''>
+                    <span class="input-group-addon" style="border-color:#1799ac">
+                        <span class="glyphicon glyphicon-map-marker" style="color: #1799ac"></span>
+                    </span>
+                    @*@Html.TextBoxFor(model => model.SimpleSearch.Location, new { @class = "form-control", @placeholder = "Location", @style = "border-color:#1799ac" })*@
+                    <input name="location" class="form-control" type="text" style="border-color:#1799ac" placeholder="Location" required />
+                    
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-top: 20px">
+                <select class="form-control" name="category" style="border-color: #1799ac">
+                    <option>--Select Category--</option>
+                    <option value="small">Small Scale</option>
+                    <option value="medium">Medium Scale</option>
+                    <option value="large">Large Scale</option>
+                </select>
+            </div>
+
+            <div class="col-md-2" style="padding-top:20px; padding-bottom:20px">
+                <button type="submit" class="btn btn-info btn-block"><i class="fa fa-search"></i> Search</button>
+            </div>
+        }
+    </div>
+</div>
+
+
+    <table class="table">
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.LogoUrl == null)
+                    {
+                        <img src="~/Logos/defaultlogo.png" style="height:100px" />
+                    }
+                    else
+                    {
+                        <img src="@Html.DisplayFor(modelItem => item.LogoUrl)" height="100" />
+                    }
+                </td>
+                <td>
+                    <b>@Html.DisplayFor(modelItem => item.CompanyName)</b><br />
+                    @Html.DisplayFor(modelItem => item.Website) <br />
+                    @Html.DisplayFor(modelItem => item.PhoneNo)
+
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Website)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+            </tr>
+        }
+
+    </table>

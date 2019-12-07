@@ -1,0 +1,65 @@
+﻿@model SME_Hub.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    ViewBag.Page = "Login";
+}
+
+<div class="row">
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-sm-4 col-sm-offset-4">
+                    
+                        <div class="basic-login">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    <label for="login-username"><i class="icon-user"></i> <b>Username or Email</b></label>
+                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.UserName)
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password"><i class="icon-lock"></i> <b>Password</b></label>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Password)
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox">
+                                        @Html.CheckBoxFor(m => m.RememberMe) Remember me
+                                    </label>
+                                    <a href="page-password-reset.html" class="forgot-password">Forgot password?</a>
+                                    <button type="submit" class="btn pull-right">Login</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            }
+                        </div>
+                    
+                </div>
+
+                    @*<div class="col-sm-7 social-login">
+                <p>Or login with your Facebook or Twitter</p>
+                <div class="social-login-buttons">
+                    <a href="#" class="btn-facebook-login">Login with Facebook</a>
+                    <a href="#" class="btn-twitter-login">Login with Twitter</a>
+                </div>
+                <div class="clearfix"></div>
+                <div class="not-member">
+                    <p>Not a member? <a href="page-register.html">Register here</a></p>
+                </div>
+            </div>*@
+                </div>
+        </div>
+    </div>
+    
+</div>
+@*@Styles.Render("~/Content/css")*@
+@Styles.Render("~/Content/themes/base/css")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jqueryval")
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

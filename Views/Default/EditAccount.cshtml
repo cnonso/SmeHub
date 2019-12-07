@@ -1,0 +1,167 @@
+﻿@model SME_Hub.Models.CompanyProfileViewModel
+
+@{
+    ViewBag.Title = "Edit My Account";
+}
+<script>
+    //Client-side image upload preview
+    var loadFile = function (event) {
+        var output = document.getElementById('output1');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+    var map;
+    var myCenter = new google.maps.LatLng(8.971897294083027, 7.470703125);//Abuja= 8.971897294083027, 7.470703125; London = 51.508742, -0.120850
+
+    function initialize() {
+        var mapProp = {
+            center: myCenter,
+            zoom: 6,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            placeMarker(event.latLng);
+        });
+    }
+
+    function placeMarker(location) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+        });
+        infowindow.open(map, marker);
+        document.gpsForm.CoordinateLat.value = location.lat();
+        document.gpsForm.CoordinateLong.value = location.lng()
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Update Profile</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        @*@using (Html.BeginForm("EditAccount", "Default", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {*@
+        <form name="gpsForm" action="EditAccount" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="basic-login">
+                        <h3>Company Profile.</h3>
+                        <hr />
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @placeholder = "Company Name" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Website, new { @class = "form-control", @placeholder = "Website" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.PhoneNo, new { @class = "form-control", @placeholder = " Phone Number" })
+                        </div>
+
+                        <div class="form-group">
+                            <select name="category" class="form-control">
+                                <option>Select Category</option>
+                                <option value="Small Scale">Small Scale</option>
+                                <option value="Medium Scale">Medium Scale</option>
+                                <option value="Large Scale">Large Scale</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeholder = "Address" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = " Brief Description...", @rows = 7 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="basic-login">
+                        <h3>Map Location. <small>Optional but important.</small></h3>
+                        <hr />
+                        <div class="form-group">
+                            <div style="background-color:white; padding-top:10px">
+                                <div class="box-header with-border" style="padding-bottom:10px">
+                                    <b>Select the location from map.</b>
+                                    <div class="box-tools pull-right">
+                                        <b>Lat:</b> <input type="text" id="coordinate" name="CoordinateLat"><b>Long.</b><input type="text" id="coordinate" name="CoordinateLong">
+                                        @*@Html.TextBoxFor(model => model.CoordinateLat, new { name = "coordinate"})*@
+                                    </div>
+                                </div>
+                                <div class="box-body" style="padding:10px">
+                                    <div id="googleMap" style="width:690px;height:330px;"></div>
+
+                                </div><!-- /.box-body -->
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row" style="margin-top:25px">
+                <div class="col-sm-4">
+                    <div class="basic-login">
+                        <h3 style="margin-top:20px">Contact Person <small>Optional</small></h3>
+                        <hr />
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.CompanyOwner, new { @class = "form-control", @placeholder = "Full Name" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.PersonalPhoneNo, new { @class = "form-control", @placeholder = "Phone Number" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.PersonalEmail, new { @class = "form-control", @placeholder = " Email" })
+                        </div>
+                        <div class="form-group">
+                            <label>Subscribe to Newsletter @Html.CheckBoxFor(model => model.SubscribeNewsletter)</label>
+                        </div>
+                        <div class="form-group" style="margin-top:20px">
+                            @Html.TextBoxFor(m => m.LogoImage, new { @type = "file", accept = "image/*", onchange = "loadFile(event)" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="basic-login">
+                        <h3>Company Picture. </h3>
+                        <hr />
+                        <div style="height:200px; width:200px; border-style:dashed; border-width:thin">
+                            <img class="img-responsive center-block" id="output1" height="200" width="200" />
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn pull-right">Update </button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*}*@
+            </form>
+</div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

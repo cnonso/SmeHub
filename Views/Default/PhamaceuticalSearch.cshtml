@@ -1,0 +1,111 @@
+﻿@model IEnumerable<SME_Hub.Models.MyAccount>
+
+@{
+    ViewBag.Title = "PhamaceuticalSearch";
+}
+
+<h2>PhamaceuticalSearch</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Website)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LogoUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyOwner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonalPhoneNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonalEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoordinateLong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoordinateLat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubscribeNewsletter)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Website)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LogoUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyOwner)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonalPhoneNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonalEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CoordinateLong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CoordinateLat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubscribeNewsletter)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

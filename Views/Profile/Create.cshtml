@@ -1,0 +1,114 @@
+﻿@model SME_Hub.Models.MyAccountViewModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h3>Business Profile</h3>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="row"></div>
+    <div class="form-horizontal">
+        <hr />
+        <div style="background-color:#edf3f2; margin-bottom:20px">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyName, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CompanyName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Website, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Website, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Website)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PhoneNo, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PhoneNo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Address)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Category, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Category)
+                </div>
+            </div>
+
+        </div>
+        <hr/>
+        <h3>Personal Profile</h3>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyOwner, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.CompanyOwner, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CompanyOwner)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PersonalPhoneNo, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.PersonalPhoneNo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PersonalPhoneNo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PersonalEmail, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.PersonalEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PersonalEmail)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubscribeNewsletter, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.CheckBoxFor(model => model.SubscribeNewsletter)
+                @Html.ValidationMessageFor(model => model.SubscribeNewsletter)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-9">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

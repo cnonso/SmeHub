@@ -1,0 +1,157 @@
+﻿@model IEnumerable<SME_Hub.Models.MyAccount>
+@*@model SME_Hub.Models.MultiModels*@
+
+@{
+    ViewBag.Title = "Search Result";
+}
+
+@helper buildLinks(int start, int end, string innerContent)
+{
+    for (int i = start; i <= end; i++)
+    {
+        <a class="@(i == ViewBag.Currentpage ? "btn btn-info frist" : "btn btn-default")" href="@Url.Action("SimpleSearch", "Default", new { page = i })">@(innerContent ?? i.ToString())</a>
+    }
+}
+
+@helper pageLinks()
+{
+    const int maxPages = 11;
+
+    if (ViewBag.TotalPages <= maxPages)
+    {
+        @buildLinks(1, (int)ViewBag.TotalPages, null)
+        return;
+    }
+
+    int pagesAfter = (Int16)ViewBag.TotalPages - ViewBag.CurrentPage; // Number of pages after current
+    int pagesBefore = ViewBag.CurrentPage - 1; // Number of pages before current
+
+    if (pagesAfter <= 4)
+    {
+        @buildLinks(1, 1, null) // Show 1st page
+        int pageSubset = (Int16)ViewBag.TotalPages - maxPages - 1 > 1 ? (Int16)ViewBag.TotalPages - maxPages - 1 : 2;
+
+        @buildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+                                                @buildLinks((Int16)ViewBag.TotalPages - maxPages + 3, (Int16)ViewBag.TotalPages, null) // Show last pages
+        return; // Exit
+    }
+
+    if (pagesBefore <= 4)
+    {
+        @buildLinks(1, maxPages - 2, null) // Show 1st pages
+        int pageSubset = maxPages + 2 < (Int16)ViewBag.TotalPages ? maxPages + 2 : (Int16)ViewBag.TotalPages - 1;
+
+        @buildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+                                                @buildLinks((Int16)ViewBag.TotalPages, (Int16)ViewBag.TotalPages, null) // Show last page
+        return; // Exit
+    }
+
+    if (pagesAfter > 4)
+    {
+        @buildLinks(1, 1, null) // Show 1st pages
+        int pageSubset1 = ViewBag.CurrentPage - 7 > 1 ? ViewBag.CurrentPage - 7 : 2;
+        int pageSubset2 = ViewBag.CurrentPage + 7 < (Int16)ViewBag.TotalPages ? (Int16)ViewBag.CurrentPage + 7 : (Int16)ViewBag.TotalPages - 1;
+
+        @buildLinks(pageSubset1, pageSubset1, pageSubset1 == ViewBag.CurrentPage - 4 ? null : "...") // Show 1st page subset (...)
+                                                                                                    @buildLinks(ViewBag.CurrentPage - 3, ViewBag.CurrentPage + 3, null) // Show middle pages
+
+        // Show 2nd page subset (...)
+        // only show ... if page is contigous to the previous one.
+
+        @buildLinks(pageSubset2, pageSubset2, pageSubset2 == ViewBag.CurrentPage + 4 ? null : "...")
+        @buildLinks((Int16)ViewBag.TotalPages, (Int16)ViewBag.TotalPages, null) // Show last page
+        return; // Exit
+    }
+}
+
+
+<div class="tips w3l" style="margin-top:-100px">
+    <div class="container">
+        
+        <!--//search-car-left-nav -->
+        <div class="col-md-9 tips-info">
+            @foreach (var item in Model)
+            {
+                <div class="news-grid">
+                    @if (item.LogoUrl == null)
+                    {
+                        <div class="news-img up">
+                            <a href="@Url.Action("Details", "Default", new { id = item.Id })"> <img src="~/Logos/defaultlogo.png" alt=" " class="img-responsive"></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="news-img up">
+                            <a href="@Url.Action("Details", "Default", new { id = item.Id })"><img src="@Html.DisplayFor(modelItem => item.LogoUrl)" alt=" " class="img-responsive"></a>
+                        </div>
+                    }
+                    <div class="news-text coming">
+                        <h3><a href="single.html">@Html.DisplayFor(modelItem => item.CompanyName)</a></h3>
+                        <strong>
+                            Listed under:
+                        </strong>
+                        <small>
+                            @Html.DisplayFor(modelItem => item.Category) Businesses.
+                        </small>
+                        <p>
+                            <span style="color:#097c67">@Html.DisplayFor(modelItem => item.Website)</span><br />
+                            @Html.DisplayFor(modelItem => item.PhoneNo) <br />
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </p>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Description).ToString().Substring(0, Math.Min(item.Description.Length, 124))...
+                            <span style="float:right"><a href="@Url.Action("Details", "Default", new { id = item.Id })" class="read hvr-shutter-in-horizontal">More Info</a></span>
+                        </p>
+                        
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            }
+            <div class="blog-pagenat" style="margin-bottom:20px">
+                <ul>
+                    Page:
+                    <li>@pageLinks()</li>
+                </ul>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="col-md-3 search-car-left-sidebar">
+            @using (Html.BeginForm("ComplexSearch", "Default"))
+            {
+                <section class="sky-form">
+                    <h4>Refine Search</h4>
+                </section>
+                <div class="w_nav1">
+                    <h4>I am looking for...</h4>
+                    @Html.DropDownList("KeyWord", null, new { @id = "country19", @class = "frm-field required", @style = "border-color:#1799ac" })
+
+                </div>
+                <div class="w_nav1 two">
+                    <h4>At...</h4>
+                    @Html.DropDownList("Location", null, new { @id = "country12", @class = "frm-field required", @style = "border-color:#1799ac" })
+                </div>
+
+                <h3>filter by</h3>
+                <section class="sky-form">
+                    <h4>Scale</h4>
+                    <div class="scrollbar" id="style-2">
+
+                        <div class="form-inner">
+                            <label class="checkbox"><input type="checkbox" value="Small Scale" name="sScale"><i></i>Small Scale</label>
+                            <label class="checkbox"><input type="checkbox" value="Medium Scale" name="mscale"><i></i>Medium Scale</label>
+                            <label class="checkbox"><input type="checkbox" value="Large Scale" name="lScale"><i></i>Large Scale</label>
+
+                            <input style="margin-top:25px" class="btn btn-block btn-warning" type="submit" value="Find">
+                        </div>
+                    </div>
+                </section>
+            }
+            <!---->
+        </div>
+
+    </div>
+</div>
+
+
+
+

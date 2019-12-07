@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <style>
+        body, html {
+            height: 200%;
+        }
+
+
+        #one {
+            width: 100%;
+            height: 200px;
+            background-color: aqua;
+            position: fixed;
+        }
+
+
+        #two {
+            width: 100%;
+            height: 50px;
+            background-color: red;
+            margin-top: 150%;
+            position: absolute;
+        }
+
+    </style>
+    <script>
+        var windw = this;
+
+        $.fn.followTo = function (elem) {
+            var $this = this,
+                $window = $(windw),
+                $bumper = $(elem),
+                bumperPos = $bumper.offset().top,
+                thisHeight = $this.outerHeight(),
+                setPosition = function () {
+                    if ($window.scrollTop() > (bumperPos - thisHeight)) {
+                        $this.css({
+                            position: 'absolute',
+                            top: (bumperPos - thisHeight)
+                        });
+                    } else {
+                        $this.css({
+                            position: 'fixed',
+                            top: 0
+                        });
+                    }
+                };
+            $window.resize(function () {
+                bumperPos = pos.offset().top;
+                thisHeight = $this.outerHeight();
+                setPosition();
+            });
+            $window.scroll(setPosition);
+            setPosition();
+        };
+
+        $('#one').followTo('#two');
+
+
+    </script>
+
+    <div id="one">FIXED...</div>
+    <div id="two">...BUT STOPS HERE</div>
+</body>
+</html>

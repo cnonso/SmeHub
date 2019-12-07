@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SmeHub" Class="BusinessSummaryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=CLUE-PC\SQLEXPRESS;Initial Catalog=SmeHub;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SmeHubConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.[_BusinessSummary]" Member="_BusinessSummaries">
+    <Type Name="_BusinessSummary">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PlaceId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="_PLace__BusinessSummary" Member="_PLace" ThisKey="PlaceId" OtherKey="Id" Type="_PLace" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[_PLace]" Member="_PLaces">
+    <Type Name="_PLace">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="_PLace__BusinessSummary" Member="_BusinessSummaries" ThisKey="Id" OtherKey="PlaceId" Type="_BusinessSummary" />
+    </Type>
+  </Table>
+</Database>
